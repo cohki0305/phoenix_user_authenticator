@@ -3,10 +3,11 @@ defmodule UserAuthenticator.Repo.Migrations.CreateUser do
 
   def change do
     create table(:users) do
-      add :email, :string
-      add :crypted_password, :string
+      add :email, :string, null: false
+      add :crypted_password, :string, null: false
 
       timestamps()
     end
+    create unique_index(:users, [:email])
   end
 end
