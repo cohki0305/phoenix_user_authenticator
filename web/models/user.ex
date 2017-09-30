@@ -4,6 +4,7 @@ defmodule UserAuthenticator.User do
   schema "users" do
     field :email, :string
     field :crypted_password, :string
+    field :password, :string, virtual: true
 
     timestamps()
   end
@@ -13,7 +14,24 @@ defmodule UserAuthenticator.User do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:email, :crypted_password])
-    |> validate_required([:email, :crypted_password])
+    |> cast(params, [:email, :password])
+    |> validate_required([:email, :password])
+    |> update_change(:email, &String.downcase/1)
+    |> unique_constraint(:email)
+    |> validate_format(:email, ~r/@/)
+  end
+
+  @doc """
+  Create user record after encrypting password
+  """
+
+  def create(changeset, repo) do
+    changeset
+    |> put_change(:crypted_password, hashed_password(changeset.params["password"]))
+    |> repo.insert()
+  end
+
+  defp hashed_password(password) do
+    Comeonin.Bcrypt.hashpwsalt(password)
   end
 end
