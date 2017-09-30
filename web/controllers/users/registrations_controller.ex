@@ -17,7 +17,7 @@ defmodule UserAuthenticator.Users.RegistrationsController do
       {:error, changeset} ->
         conn
         |> put_flash(:error, "アカウントを作成できませんでした")
-        |> redirect(to: registrations_path(conn, :new))
+        |> render("new.html", changeset: changeset)
     end
   end
 
