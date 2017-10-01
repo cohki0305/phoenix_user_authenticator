@@ -22,6 +22,7 @@
         <span class="logo"></span>
         <%= if logged_in?(@conn) do %>
           <li><%= current_user(@conn).email %></li>
+          <li><%= link "ログアウト", to: sessions_path(@conn, :delete), method: :delete %></li>
         <% else %>
           <li><%= link "ユーザ登録", to: registrations_path(@conn, :new) %></li>
           <li><%= link "ログイン", to: sessions_path(@conn, :new) %></li>

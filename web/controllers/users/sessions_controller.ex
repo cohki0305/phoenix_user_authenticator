@@ -20,7 +20,18 @@ defmodule UserAuthenticator.Users.SessionsController do
     end
   end
 
+  def delete(conn, _params) do
+    conn
+    |> delete_session(:current_user)
+    |> put_flash(:info, "ログアウトしました")
+    |> redirect(to: redirect_path_after_logout(conn))
+  end
+
   defp redirect_path_after_login(conn) do
+    page_path(conn, :index)
+  end
+
+  defp redirect_path_after_logout(conn) do
     page_path(conn, :index)
   end
 end
