@@ -19,7 +19,7 @@ defmodule UserAuthenticator.Router do
     get "/", PageController, :index
 
     scope "/users", Users do
-      resources "/registers", RegistrationsController, only: [:new, :create]
+      resources "/registers", RegistrationsController, only: [:new, :create],          singleton: true
       resources "/login",     SessionsController,      only: [:new, :create, :delete], singleton: true
     end
   end
