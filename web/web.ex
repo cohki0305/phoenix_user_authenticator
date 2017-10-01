@@ -53,6 +53,7 @@ defmodule UserAuthenticator.Web do
       import UserAuthenticator.Router.Helpers
       import UserAuthenticator.ErrorHelpers
       import UserAuthenticator.Gettext
+      import UserAuthenticator.SessionHelpers, only: [current_user: 1, logged_in?: 1]
     end
   end
 
