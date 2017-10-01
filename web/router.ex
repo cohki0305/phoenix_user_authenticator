@@ -20,6 +20,7 @@ defmodule UserAuthenticator.Router do
 
     scope "/users", Users do
       resources "/registers", RegistrationsController, only: [:new, :create]
+      resources "/login",     SessionsController,      only: [:new, :create, :delete], singleton: true
     end
   end
 
